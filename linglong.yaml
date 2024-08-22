@@ -1,0 +1,28 @@
+version: "1"
+
+package:
+  id: io.github.cumulus-qt
+  name: cumulus-qt
+  version: 4.2.0.1
+  kind: app
+  description: |
+    Qt port for Cumulus
+
+command:
+  - /opt/apps/io.github.cumulus-qt/files/bin/Cumulus
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/vadrian89/cumulus-qt.git
+    version: master
+    commit: 46ca6468a1fb3936af7e9e5d837b6bee23c8c622
+
+build: |
+  cd /project/linglong/sources/cumulus-qt.git
+  git apply ../../../0001-install.patch
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
