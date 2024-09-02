@@ -1,0 +1,53 @@
+From 2dcbab917e2d85386327aa546c62e06efb9757a5 Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Wed, 14 Aug 2024 19:23:18 +0800
+Subject: [PATCH] install
+
+---
+ Cumulus.desktop | 11 +++++++++++
+ deployment.pri  | 10 +++++++++-
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+ create mode 100644 Cumulus.desktop
+
+diff --git a/Cumulus.desktop b/Cumulus.desktop
+new file mode 100644
+index 0000000..e14e9e4
+--- /dev/null
++++ b/Cumulus.desktop
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Categories=Accessibility;Qt;Utility;
++Exec=Cumulus
++Name=Cumulus
++Name[zh_CN]=Cumulus
++Icon=wund_logo
++StartupNotify=false
++Terminal=false
++Type=Application
++GenericName=Cumulus
++Version=4.2.1
+\ No newline at end of file
+diff --git a/deployment.pri b/deployment.pri
+index fb80ce2..4fd1e58 100644
+--- a/deployment.pri
++++ b/deployment.pri
+@@ -3,7 +3,15 @@ unix:!android {
+         qnx {
+             target.path = /tmp/$${TARGET}/bin
+         } else {
+-            target.path = /opt/$${TARGET}/bin
++            #target.path = /opt/$${TARGET}/bin
++	target.path = $$PREFIX/bin
++	desktop.files = Cumulus.desktop
++	desktop.path = $$PREFIX/share/applications/
++	icons.path = $$PREFIX/share/icons
++	icons.files = assets/icons/wund_logo.png
++	asset.path = $$PREFIX/bin/assets
++	asset.files = assets/*
++	INSTALLS += desktop icons asset
+         }
+         export(target.path)
+     }
+-- 
+2.43.4
+
